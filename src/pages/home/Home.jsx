@@ -19,7 +19,7 @@ const Home = () => {
             <CardMedia
               component="img"
               height="194"
-              image="/static/images/cards/paella.jpg"
+              image="https://mui.com/static/images/cards/paella.jpg"
               alt="Paella dish"
             />
             <CardContent>
