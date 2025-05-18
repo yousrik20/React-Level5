@@ -14,7 +14,7 @@ import {
   Stack,
 } from "@mui/material";
 import "./Cart.css";
-import { Add, Delete, DeleteForever, Remove } from "@mui/icons-material";
+import { Add, Delete, Remove } from "@mui/icons-material";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
