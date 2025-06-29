@@ -14,6 +14,7 @@ import {
 } from "@mui/icons-material";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -31,6 +32,9 @@ const Drawerr = ({
   drawerType,
   hideDrawer,
 }) => {
+  // @ts-ignore
+  const { selectedProducts } = useSelector((state) => state.carttt);
+  
   const currentLocation = useLocation();
 
   const navigate = useNavigate();
@@ -38,7 +42,7 @@ const Drawerr = ({
 
   const myList = [
     { text: "Home", icon: <Home />, path: "/" },
-    { text: "Cart", icon:  <StyledBadge badgeContent={4} color="secondary">
+    { text: "Cart", icon:  <StyledBadge badgeContent={selectedProducts.length} color="secondary">
     <ShoppingCart />
   </StyledBadge>, path: "/cart" },
   ];
