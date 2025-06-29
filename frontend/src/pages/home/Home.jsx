@@ -1,3 +1,4 @@
+import React from "react";
 import {Stack, useTheme } from "@mui/system";
 import "./Home.css";
 import Card from "@mui/material/Card";
@@ -7,25 +8,36 @@ import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 
 import { Button } from "@mui/material";
+import { useGetproductsByNameQuery } from '../../Redux/productsApi';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
-const recievedDataFromAPI = [{}, {},{}, {}];
 const Home = () => {
   const theme = useTheme();
-  return (
+  const { data, error, isLoading } = useGetproductsByNameQuery();
+  if(isLoading){
+    return(
+      <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box>
+    )
+  }
+  if(data){
+    return (
     <Stack direction={"row"} sx={{flexWrap:'wrap',justifyContent:'center'}}>
-      {recievedDataFromAPI.map((item) => {
+      {data.map((item) => {
         return (
-          <Card  sx={{ maxWidth: 277, mb: 6, mx: 2 }}>
+          
+          <Card  className="card" key={item.imageLink} sx={{ maxWidth: 277, mb: 6, mx: 2 }}>
             <CardMedia
               component="img"
-              height="194"
-              image="https://mui.com/static/images/cards/paella.jpg"
+              height="277"
+              image={item.imageLink}
               alt="Paella dish"
             />
             <CardContent>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                This impressive paella is a perfect party dish and a fun meal to
-                cook together with your guests.
+                {item.description}
               </Typography>
             </CardContent>
             <CardActions
@@ -44,7 +56,7 @@ const Home = () => {
                 mr={1}
                 color={theme.palette.error.light}
               >
-                $100
+                ${item.price}
               </Typography>
             </CardActions>
           </Card>
@@ -52,6 +64,7 @@ const Home = () => {
       })}
     </Stack>
   );
+  }
 };
 
 export default Home;
