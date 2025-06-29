@@ -1,10 +1,8 @@
-
 import "./Cart.css";
 
 import {
   Box,
   Button,
-
   Paper,
   styled,
   IconButton,
@@ -15,6 +13,7 @@ import {
 } from "@mui/material";
 import "./Cart.css";
 import { Add, Delete, Remove } from "@mui/icons-material";
+import { useSelector, useDispatch } from "react-redux";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -23,50 +22,72 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 const Cart = () => {
+  const { selectedProducts } = useSelector((state) => state.carttt);
   // Why <<<component="form">>> ?
-  return (<Box>
-     <Paper dir="rtl" className="item-container">
-        <div className="img-title-parent">
-          <img src="####" alt="" />
-          <p className="product-name">T-shirt</p>
-        </div>
+  console.log(selectedProducts);
+  return (
+    <Box>
+      {selectedProducts.map((item) => {
+        return (
+          <Paper dir="rtl" className="item-container">
+            <div className="img-title-parent">
+              <img src={item.imageLink} alt="" />
+              <p className="product-name">{item.productName}</p>
+            </div>
 
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <IconButton sx={{ color: "#1976d2", ml: "10px" }} onClick={() => {}}>
-            <Add />
-          </IconButton>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <IconButton
+                sx={{ color: "#1976d2", ml: "10px" }}
+                onClick={() => {}}
+              >
+                <Add />
+              </IconButton>
 
-          <StyledBadge badgeContent={1} color="secondary" />
+              <StyledBadge badgeContent={1} color="secondary" />
 
-          <IconButton sx={{ color: "#1976d2", mr: "10px" }} onClick={() => {}}>
-            <Remove />
-          </IconButton>
-        </div>
+              <IconButton
+                sx={{ color: "#1976d2", mr: "10px" }}
+                onClick={() => {}}
+              >
+                <Remove />
+              </IconButton>
+            </div>
 
-        <div className="price">$100</div>
+            <div className="price">${item.price}</div>
 
-      <IconButton color="error" sx={{display:{xs:'inline-flex',md:'none'}}}>
-        <Delete />
-      </IconButton>
-        <Button sx={{display:{xs:'none',md:'inline-flex'}}} variant="text" color="error">
-          delete
-        </Button>
-      </Paper>
-      <Paper sx={{width:'200px',mx:'auto',mt:'60px'}}>
+            <IconButton
+              color="error"
+              sx={{ display: { xs: "inline-flex", md: "none" } }}
+            >
+              <Delete />
+            </IconButton>
+            <Button
+              sx={{ display: { xs: "none", md: "inline-flex" } }}
+              variant="text"
+              color="error"
+            >
+              delete
+            </Button>
+          </Paper>
+        );
+      })}
+
+      <Paper sx={{ width: "200px", mx: "auto", mt: "60px" }}>
         <Typography align="center" p={2} variant="h6">
           Cart Summary
         </Typography>
-        <Divider/>
-        <Stack sx={{justifyContent:'space-between',p:1.2}} direction="row">
+        <Divider />
+        <Stack sx={{ justifyContent: "space-between", p: 1.2 }} direction="row">
           <Typography variant="body1">Subtotal</Typography>
           <Typography variant="body1">$100 </Typography>
         </Stack>
-        <Divider/>
+        <Divider />
         <Button fullWidth color="primary" variant="contained">
           CHECKOUT
         </Button>
       </Paper>
-  </Box>);
+    </Box>
+  );
 };
 
 export default Cart;
