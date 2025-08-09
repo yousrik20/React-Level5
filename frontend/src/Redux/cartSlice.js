@@ -2,16 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   selectedProducts: [
-    {
-      id: 1,
-      productName: "T-shirt",
-      description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elite. Sequi, perferendis beatae asperiores.",
-      price: 100,
-      imageLink:
-        "https://res.cloudinary.com/dbogfa6sk/image/upload/v1747679089/1_ws7kat.jpg",
-      quantity: 1,
-    },
+   
   ],
 };
 
@@ -28,7 +19,7 @@ export const counterSlice = createSlice({
     },
     increaseQuantity: (state, action) => {
       const increasedProduct= state.selectedProducts.find((item)=>{
-        return item.id;
+        return item.id=== action.payload.id;
       });
       increasedProduct.quantity+=1;
     },
