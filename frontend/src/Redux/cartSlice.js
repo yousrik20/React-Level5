@@ -27,7 +27,10 @@ export const counterSlice = createSlice({
       state.selectedProducts.push(productWithQuantity);
     },
     increaseQuantity: (state, action) => {
-      console.log("increase");
+      const increasedProduct= state.selectedProducts.find((item)=>{
+        return item.id;
+      });
+      increasedProduct.quantity+=1;
     },
     decreaseQuantity: (state, action) => {
       console.log("decrease");
