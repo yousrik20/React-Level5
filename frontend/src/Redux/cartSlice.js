@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  selectedProducts: [
-   
-  ],
+  selectedProducts: [],
+  selectedProductsID:[]
 };
 
 export const counterSlice = createSlice({
@@ -16,30 +15,36 @@ export const counterSlice = createSlice({
       //state.value += action.payload
       const productWithQuantity = { ...action.payload, quantity: 1 };
       state.selectedProducts.push(productWithQuantity);
+      state.selectedProductsID.push(action.payload.id);
     },
     increaseQuantity: (state, action) => {
-      const increasedProduct= state.selectedProducts.find((item)=>{
-        return item.id=== action.payload.id;
+      const increasedProduct = state.selectedProducts.find((item) => {
+        return item.id === action.payload.id;
       });
-      increasedProduct.quantity+=1;
+      increasedProduct.quantity += 1;
     },
     decreaseQuantity: (state, action) => {
-       const decreasedProduct= state.selectedProducts.find((item)=>{
-        return item.id=== action.payload.id;
+      const decreasedProduct = state.selectedProducts.find((item) => {
+        return item.id === action.payload.id;
       });
-      decreasedProduct.quantity-=1;
-      if(decreasedProduct.quantity === 0){
-        const newArr=state.selectedProducts.filter((item)=>{
-          return item.id !== action.payload.id; 
+      decreasedProduct.quantity -= 1;
+      if (decreasedProduct.quantity === 0) {
+        const newArr = state.selectedProducts.filter((item) => {
+          return item.id !== action.payload.id;
         });
         state.selectedProducts = newArr;
+        const newArrID = state.selectedProductsID.filter((item) => {
+          return item !== action.payload.id;
+        });
+        state.selectedProductsID = newArrID;
+        
       }
     },
     deleteProduct: (state, action) => {
-        const newArr=state.selectedProducts.filter((item)=>{
-          return item.id !== action.payload.id; 
-        });
-        state.selectedProducts = newArr;
+      const newArr = state.selectedProducts.filter((item) => {
+        return item.id !== action.payload.id;
+      });
+      state.selectedProducts = newArr;
     },
   },
 });
