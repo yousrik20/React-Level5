@@ -24,10 +24,22 @@ export const counterSlice = createSlice({
       increasedProduct.quantity+=1;
     },
     decreaseQuantity: (state, action) => {
-      console.log("decrease");
+       const decreasedProduct= state.selectedProducts.find((item)=>{
+        return item.id=== action.payload.id;
+      });
+      decreasedProduct.quantity-=1;
+      if(decreasedProduct.quantity === 0){
+        const newArr=state.selectedProducts.filter((item)=>{
+          return item.id !== action.payload.id; 
+        });
+        state.selectedProducts = newArr;
+      }
     },
     deleteProduct: (state, action) => {
-      console.log("deleted ");
+        const newArr=state.selectedProducts.filter((item)=>{
+          return item.id !== action.payload.id; 
+        });
+        state.selectedProducts = newArr;
     },
   },
 });
