@@ -33,9 +33,11 @@ const Cart = () => {
   // Why <<<component="form">>> ?
   console.log(selectedProducts);
 
+  let subtotal=0;
   return (
     <Box>
       {selectedProducts.map((item) => {
+        subtotal+=Number(item.price) * Number(item.quantity);
         return (
           <Paper dir="rtl" className="item-container">
             <div className="img-title-parent">
@@ -65,7 +67,7 @@ const Cart = () => {
               </IconButton>
             </div>
 
-            <div className="price">${item.price}</div>
+            <div className="price">${Number(item.price) * Number(item.quantity)}</div>
 
             <IconButton
               color="error"
@@ -94,7 +96,7 @@ const Cart = () => {
         <Divider />
         <Stack sx={{ justifyContent: "space-between", p: 1.2 }} direction="row">
           <Typography variant="body1">Subtotal</Typography>
-          <Typography variant="body1">$100 </Typography>
+          <Typography variant="body1">${subtotal} </Typography>
         </Stack>
         <Divider />
         <Button fullWidth color="primary" variant="contained">
