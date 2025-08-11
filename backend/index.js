@@ -13,10 +13,10 @@ app.get("/products", (req, res) => {
 
 app.get("/products/:id", (req, res) => {
   const oneProduct=products.find((item) => { 
-    // return products.id==item.id
+    return item.id==req.params.id;
     
   })
-  console.log(oneProduct);
+  res.send(oneProduct);
 });
 
 const port = process.env.PORT || 5000;
