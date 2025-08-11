@@ -6,7 +6,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-
+ 
 
 
 
@@ -19,7 +19,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<Root />}>
       <Route index element={<Home />} />
       <Route path="cart" element={<Cart />} />
-      <Route path="product-details/:id" element={< ProductDetails/>}/>
+      <Route path="product-details/:id" element={<ProductDetails />} />
 
 
       <Route path="*" element={<NotFound />} />

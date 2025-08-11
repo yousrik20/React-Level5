@@ -36,7 +36,7 @@ const Appbar = ({ drawerWidth, showDrawer }) => {
           color="inherit"
           href="/"
         >
-          Online Store
+        Online store
         </Link>
 
         <Typography mr={2} variant="body1" color="inherit">

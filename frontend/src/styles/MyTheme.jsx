@@ -21,7 +21,7 @@ const getDesignTokens = (mode) => ({
       : {
           // palette values for dark mode
           ali: {
-            main: "#081",
+            main: "teal",
           },
 
           favColor: {

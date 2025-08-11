@@ -1,57 +1,68 @@
-import React from "react";
-import { Stack, styled, useTheme } from "@mui/system";
+import { Box } from "@mui/system";
 import "./Home.css";
+import React from "react";
+import {
+  Typography,
+  IconButton,
+  Button,
+  Stack,
+  CircularProgress,
+  Badge,
+} from "@mui/material";
+import { Add, Remove } from "@mui/icons-material";
+import { styled, useTheme } from "@mui/material/styles";
 import Card from "@mui/material/Card";
+
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Typography from "@mui/material/Typography";
-import { Badge, IconButton } from "@mui/material";
-import { Button } from "@mui/material";
 import { useGetproductsByNameQuery } from "../../Redux/productsApi";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addToCart,
-  decreaseQuantity,
-  increaseQuantity,
-} from "../../Redux/cartSlice";
-import { Add, Remove } from "@mui/icons-material";
+import { addToCart, decreaseQuantity, increaseQuantity } from "Redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {},
 }));
+
 const Home = () => {
   const theme = useTheme();
   const { data, error, isLoading } = useGetproductsByNameQuery();
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navitage = useNavigate()
 
   const { selectedProducts, selectedProductsID } = useSelector(
     // @ts-ignore
     (state) => state.carttt
   );
+
   const productQuantity = (itemAPI) => {
     const myProduct = selectedProducts.find((itemUser) => {
       return itemUser.id === itemAPI.id;
     });
+
     return myProduct.quantity;
   };
+
   if (isLoading) {
     return (
       <Box sx={{ display: "flex" }}>
         <CircularProgress />
       </Box>
     );
-  } if (error) {
+  }
+
+  if (error) {
     return (
       <Box sx={{ display: "flex" }}>
-        <Typography variant="h1" color="error">ERROR</Typography>
+        <Typography variant="h1" color="error">
+          {" "}
+          ERROR{" "}
+        </Typography>
       </Box>
     );
   }
+console.log(data)
   if (data) {
     return (
       <Stack
@@ -62,7 +73,7 @@ const Home = () => {
           return (
             <Card
               className="card"
-              key={item.imageLink}
+              key={item.id}
               sx={{ maxWidth: 277, mb: 6, mx: 2 }}
             >
               <CardMedia
@@ -70,18 +81,18 @@ const Home = () => {
                 height="277"
                 image={item.imageLink}
                 alt="Paella dish"
-                onClick={() => { 
-                  navigate(`product-details/${item.id}`)
-                 }}
+                onClick={() => {
+                  navitage(`product-details/${item.id}`)
+                }}
               />
               <CardContent>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                <Typography variant="body2" color="text.secondary">
                   {item.description}
                 </Typography>
               </CardContent>
               <CardActions
-                disableSpacing
                 sx={{ justifyContent: "space-between" }}
+                disableSpacing
               >
                 {selectedProductsID.includes(item.id) ? (
                   <div
@@ -115,23 +126,20 @@ const Home = () => {
                   </div>
                 ) : (
                   <Button
+                    sx={{ textTransform: "capitalize", p: 1, lineHeight: 1.1 }}
+                    variant="contained"
+                    color="primary"
                     onClick={() => {
                       dispatch(addToCart(item));
                     }}
-                    variant="contained"
-                    color="primary"
-                    sx={{
-                      textTransform: "capitalize",
-                      p: 1,
-                      lineHeight: "1.1",
-                    }}
                   >
-                    Add To Cart
+                    Add to cart
                   </Button>
                 )}
+
                 <Typography
-                  variant="body1"
                   mr={1}
+                  variant="body1"
                   color={theme.palette.error.light}
                 >
                   ${item.price}

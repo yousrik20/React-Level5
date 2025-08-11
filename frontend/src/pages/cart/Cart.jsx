@@ -1,5 +1,3 @@
-import "./Cart.css";
-
 import {
   Box,
   Button,
@@ -13,12 +11,12 @@ import {
 } from "@mui/material";
 import "./Cart.css";
 import { Add, Delete, Remove } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
-  increaseQuantity,
   decreaseQuantity,
   deleteProduct,
-} from "../../Redux/cartSlice";
+  increaseQuantity,
+} from "Redux/cartSlice";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -26,20 +24,21 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     color: "#fff",
   },
 }));
+
 const Cart = () => {
-  const dispatch = useDispatch();
   // @ts-ignore
   const { selectedProducts } = useSelector((state) => state.carttt);
-  // Why <<<component="form">>> ?
+  const dispatch = useDispatch();
   console.log(selectedProducts);
 
-  let subtotal=0;
+  let Subtotal = 0;
+
   return (
     <Box>
       {selectedProducts.map((item) => {
-        subtotal+=Number(item.price) * Number(item.quantity);
+        Subtotal += Number(item.price) * Number(item.quantity);
         return (
-          <Paper dir="rtl" className="item-container">
+          <Paper key={item.id} dir="rtl" className="item-container">
             <div className="img-title-parent">
               <img src={item.imageLink} alt="" />
               <p className="product-name">{item.productName}</p>
@@ -67,14 +66,10 @@ const Cart = () => {
               </IconButton>
             </div>
 
-            <div className="price">${Number(item.price) * Number(item.quantity)}</div>
+            <div className="price">
+              ${Number(item.price) * Number(item.quantity)}
+            </div>
 
-            <IconButton
-              color="error"
-              sx={{ display: { xs: "inline-flex", md: "none" } }}
-            >
-              <Delete />
-            </IconButton>
             <Button
               sx={{ display: { xs: "none", md: "inline-flex" } }}
               variant="text"
@@ -85,6 +80,18 @@ const Cart = () => {
             >
               delete
             </Button>
+
+            <IconButton
+              sx={{
+                color: "#ef5350",
+                display: { xs: "inline-flex", md: "none" },
+              }}
+              onClick={() => {
+                dispatch(deleteProduct(item));
+              }}
+            >
+              <Delete />
+            </IconButton>
           </Paper>
         );
       })}
@@ -93,12 +100,19 @@ const Cart = () => {
         <Typography align="center" p={2} variant="h6">
           Cart Summary
         </Typography>
+
         <Divider />
-        <Stack sx={{ justifyContent: "space-between", p: 1.2 }} direction="row">
+
+        <Stack
+          sx={{ justifyContent: "space-between", p: 1.2 }}
+          direction={"row"}
+        >
           <Typography variant="body1">Subtotal</Typography>
-          <Typography variant="body1">${subtotal} </Typography>
+          <Typography variant="body1">${Subtotal}</Typography>
         </Stack>
+
         <Divider />
+
         <Button fullWidth color="primary" variant="contained">
           CHECKOUT
         </Button>
