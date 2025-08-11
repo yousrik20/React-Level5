@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "./product-details.css";
+import "./Product-details.css";
 import { useGetOneProductQuery } from "Redux/productsApi";
 import { useParams } from "react-router-dom";
 import {
